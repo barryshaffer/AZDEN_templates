@@ -48,14 +48,13 @@ This repository provides field-tested, offline-capable digital forms and display
 Open a command prompt (or Git Bash) and clone this repository into your Winlink Express templates folder:
 
 ```cmd
-cd "C:\RMS Express\Templates"
-git clone https://github.com/<owner>/AZDEN_templates.git
+cd "C:\RMS Express\Global Folders\Templates"
+git clone https://github.com/barryshaffer/AZDEN_templates.git
 ```
-*(Or clone into `C:\RMS Express\Global Templates\AZDEN_templates`)*
 
 To pull future form updates, run:
 ```cmd
-cd "C:\RMS Express\Templates\AZDEN_templates"
+cd "C:\RMS Express\Global Folders\Templates\AZDEN_templates"
 git pull
 ```
 
