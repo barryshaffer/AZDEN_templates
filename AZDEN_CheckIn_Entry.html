@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AZDEN Net Check-In Entry</title>
+  <link href="{FormFolder}AZDEN_Style.css" rel="stylesheet" type="text/css" />
+
+  <script>
+    function updateConditionPreview(val) {
+      var banner = document.getElementById('conditionPreview');
+      var desc = document.getElementById('conditionDesc');
+      if (!banner || !desc) return;
+
+      banner.className = 'condition-banner';
+      if (val.indexOf('Green') !== -1) {
+        banner.className += ' cond-green';
+        desc.innerText = 'STATUS NORMAL: Station is fully operational, emergency power stable, no resources required.';
+      } else if (val.indexOf('Yellow') !== -1) {
+        banner.className += ' cond-yellow';
+        desc.innerText = 'ATTENTION REQUIRED: Station is operational but needs assistance, equipment, relief, or fuel.';
+      } else if (val.indexOf('Red') !== -1) {
+        banner.className += ' cond-red';
+        desc.innerText = 'PRIORITY / EMERGENCY: Immediate medical, rescue, or safety assistance required!';
+      }
+    }
+
+    
+    function TimeNow(Timefld, FocusFld) {
+      var d = new Date(),
+          year = d.getFullYear(),
+          month = d.getMonth() + 1,
+          day = d.getDate(),
+          h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
+          m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+      if (month < 10) month = '0' + month;
+      if (day < 10) day = '0' + day;
+      var myprompt = year + '-' + month + '-' + day + ' ' + h + ':' + m;
+      var RightNow = prompt('Enter or confirm Date & Time:', myprompt);
+      if (RightNow !== null && RightNow.trim() !== '') {
+        document.getElementById(Timefld).value = RightNow.trim();
+      }
+    }
+
+    function Checkifinbrowser() {
+      var el = document.getElementById("testCall");
+      if (!el) return;
+      var x = el.value;
+      if (x.indexOf("{Msg") > -1) {
+        var subBtn = document.getElementById("Submit");
+        if (subBtn) subBtn.style.visibility = "hidden";
+        alert("You are running this form outside of Winlink.\n\nWhen you have completed the form, click Save Form Data and provide the saved file to the radio operator for transmission.");
+      } else {
+        var subBtn = document.getElementById("Submit");
+        if (subBtn) subBtn.style.visibility = "visible";
+      }
+    }
+
+    function DateforFile() {
+      var d = new Date(),
+          year = d.getFullYear(),
+          month = d.getMonth() + 1,
+          day = d.getDate(),
+          h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
+          m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+      if (month < 10) month = '0' + month;
+      if (day < 10) day = '0' + day;
+      return year + '-' + month + '-' + day + ' ' + h + '_' + m;
+    }
+
+    function formDataToObject(elForm) {
+      if (!elForm) return {};
+      var fields = elForm.querySelectorAll('input, select, textarea'),
+          data = {};
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        var sKey = field.name || field.id;
+        if (!sKey || field.type === 'button' || field.type === 'submit' || field.type === 'reset' || field.type === 'file' || sKey === 'parseme') {
+          continue;
+        }
+        switch (field.type) {
+          case 'checkbox':
+            data[sKey] = field.checked ? 1 : 0;
+            break;
+          case 'radio':
+            if (field.checked) {
+              data[sKey] = field.value;
+            } else if (data[sKey] === undefined) {
+              data[sKey] = '';
+            }
+            break;
+          case 'select-multiple':
+            var selected = [];
+            for (var j = 0; j < field.options.length; j++) {
+              if (field.options[j].selected) selected.push(field.options[j].value);
+            }
+            data[sKey] = selected;
+            break;
+          default:
+            data[sKey] = field.value;
+        }
+      }
+      var jsonStr = JSON.stringify(data, null, 2);
+      document.getElementById('parseme').value = jsonStr;
+      return data;
+    }
+
+    function saveTextAsFile() {
+      var textToWrite = document.getElementById('parseme').value;
+      if (!textToWrite) return;
+
+      var defaultName = "AZDEN CheckIn " + DateforFile() + ".txt";
+      var fileNameToSaveAs = prompt("Enter filename to save form data:", defaultName);
+      if (!fileNameToSaveAs) return;
+
+      var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+
+      if (window.navigator && window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(textFileAsBlob, fileNameToSaveAs);
+      } else {
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = function(e) { document.body.removeChild(e.target); };
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    }
+
+    function SaveData() {
+      formDataToObject(document.getElementById('myform'));
+      saveTextAsFile();
+    }
+
+    function populateForm(data) {
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          alert("Error parsing form data file: " + e.message);
+          return;
+        }
+      }
+      if (!data || typeof data !== 'object') return;
+
+      for (var key in data) {
+        var el = document.getElementById(key) || document.querySelector('[name="' + key + '"]');
+        if (!el) continue;
+
+        if (el.type === 'checkbox') {
+          el.checked = !!data[key];
+        } else if (el.type === 'radio') {
+          var radios = document.querySelectorAll('[name="' + key + '"]');
+          for (var r = 0; r < radios.length; r++) {
+            radios[r].checked = (radios[r].value === data[key]);
+          }
+        } else if (el.options && data[key] instanceof Array) {
+          for (var opt = 0; opt < el.options.length; opt++) {
+            el.options[opt].selected = (data[key].indexOf(el.options[opt].value) !== -1);
+          }
+        } else {
+          el.value = data[key];
+        }
+      }
+
+      var condEl = document.getElementById('StationCondition');
+      if (condEl) {
+        updateConditionPreview(condEl.value);
+      }
+    }
+
+    function initFileLoader() {
+      var fileSelected = document.getElementById('txtfiletoread');
+      if (!fileSelected) return;
+
+      fileSelected.addEventListener('change', function () {
+        var fileToRead = fileSelected.files[0];
+        if (!fileToRead) return;
+
+        var fileReader = new FileReader();
+        fileReader.onload = function () {
+          document.getElementById('parseme').value = fileReader.result;
+          populateForm(fileReader.result);
+          fileSelected.value = '';
+        };
+        fileReader.readAsText(fileToRead, "UTF-8");
+      }, false);
+    }
+
+    window.onload = function () {
+      initFileLoader();
+      updateConditionPreview(document.getElementById('StationCondition').value);
+      Checkifinbrowser();
+    };
+  </script>
+</head>
+<body>
+  <div class="azden-card">
+    <div class="azden-header">
+      <div class="azden-header-title">
+        <h1>Arizona Digital Emcomm Net</h1>
+        <div class="subtitle">AZDEN Station Check-In Form (Winlink Express)</div>
+      </div>
+      <div class="azden-badge">EmComm Net</div>
+    </div>
+
+    <form id="myform" class="azden-body" method="post" action="http://{FormServer}:{FormPort}" enctype="multipart/form-data" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');">
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="StationCall">Station Callsign <span class="required">*</span></label>
+          <input type="text" id="StationCall" name="StationCall" class="form-control" value="{Callsign}" placeholder="e.g. W7AZ" required />
+        </div>
+
+        <div class="form-group">
+          <label for="OperatorName">Operator Name <span class="required">*</span></label>
+          <input type="text" id="OperatorName" name="OperatorName" class="form-control" placeholder="First &amp; Last Name" required />
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="GridOrPos">Position / Coordinates / Grid <span class="required">*</span></label>
+          <input type="text" id="GridOrPos" name="GridOrPos" class="form-control" value="{Position}" placeholder="e.g. 33.4484 N, 112.0740 W or DM33" required />
+        </div>
+
+        <div class="form-group">
+          <label for="CheckInDateTime">Check-In Date &amp; Time <span class="required">*</span></label>
+          <input type="text" id="CheckInDateTime" name="CheckInDateTime" class="form-control" value="{DateTime}" placeholder="Click to Add Date/Time" onclick="TimeNow('CheckInDateTime');" title="Click to insert or edit Date &amp; Time" style="cursor: pointer;" required />
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <label for="StationCondition">Station Operational Condition <span class="required">*</span></label>
+          <select id="StationCondition" name="StationCondition" class="form-control" onchange="updateConditionPreview(this.value)" required>
+            <option value="Green - Operational" selected>Green - Operational</option>
+            <option value="Yellow - Needs Assistance">Yellow - Needs Assistance</option>
+            <option value="Red - Emergency Assistance Needed">Red - Emergency Assistance Needed</option>
+          </select>
+
+          <div id="conditionPreview" class="condition-banner cond-green">
+            <span id="conditionDesc">STATUS NORMAL: Station is fully operational, emergency power stable, no resources required.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <label for="NetControl">Net Control Callsign / Address</label>
+          <input type="text" id="NetControl" name="NetControl" class="form-control" value="NET-AZDEN" placeholder="Callsign or tactical address of Net Control" />
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <label for="Comments">Traffic List / Comments / Resource Requests</label>
+          <textarea id="Comments" name="Comments" class="form-control" rows="3" placeholder="List any formal traffic, power source status, local weather, or notes..."></textarea>
+        </div>
+      </div>
+
+      <!-- Hidden elements for file save & load operations -->
+      <textarea id="parseme" style="display: none;"></textarea>
+      <input type="file" id="txtfiletoread" accept=".txt" style="display: none;" />
+
+      <!-- Form Actions & Data Persistence Buttons -->
+      <div class="button-row">
+        <div class="button-group-left">
+          <input type="button" id="loadbtn" value="Load Form Data" class="btn btn-utility" onclick="document.getElementById('txtfiletoread').click();" title="Load previously saved form data (.txt)" />
+          <input type="button" id="savebtn" value="Save Form Data" class="btn btn-utility" onclick="SaveData();" title="Save current form data to a local text file" />
+          <input type="reset" id="resetbtn" value="Reset Form" class="btn btn-cancel" onclick="setTimeout(function(){ updateConditionPreview(document.getElementById('StationCondition').value); }, 50);" />
+        </div>
+
+        <div class="button-group-right">
+          <input type="button" value="Cancel" class="btn btn-cancel" onclick="window.close();" title="Close browser without submitting" />
+          <input type="submit" id="Submit" name="Submit" value="Submit" class="btn btn-submit" method="Post" enctype="multipart/form-data" title="Submit check-in to Winlink Express" />
+        </div>
+      </div>
+
+      <input name="testCall" type="hidden" id="testCall" value="{MsgSender}" />
+  <input name="Templateversion" type="hidden" id="Templateversion" value="AZDEN Check-In v 1.0" />
+</form>
+  </div>
+</body>
+</html>

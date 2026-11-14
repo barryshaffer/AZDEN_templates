@@ -1,0 +1,20 @@
+Form: AZDEN_CheckIn_Entry.html,AZDEN_CheckIn_Display.html
+To: <var NetControl>
+Subject: AZDEN Check-In: <var StationCall>, <var StationCondition>
+Msg:
+ARIZONA DIGITAL EMCOMM NET (AZDEN)
+STATION CHECK-IN
+------------------------------------------------------------
+Station Callsign:   <var StationCall>
+Operator Name:      <var OperatorName>
+Position / Grid:    <var GridOrPos>
+Date & Time:        <var CheckInDateTime>
+Station Condition:  <var StationCondition>
+Net Control:        <var NetControl>
+
+Comments / Traffic / Notes:
+<var Comments>
+
+------------------------------------------------------------
+Express Sending Station:	<MsgSender>
+Senders Template Version:	<var Templateversion>

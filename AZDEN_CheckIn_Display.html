@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AZDEN Check-In Record</title>
+  <link href="{FormFolder}AZDEN_Style.css" rel="stylesheet" type="text/css" />
+  <script>
+    function applyConditionStyle() {
+      var badge = document.getElementById('conditionPill');
+      if (!badge) return;
+      var text = badge.innerText || badge.textContent || '';
+      if (text.indexOf('Green') !== -1) {
+        badge.className += ' cond-green';
+      } else if (text.indexOf('Yellow') !== -1) {
+        badge.className += ' cond-yellow';
+      } else if (text.indexOf('Red') !== -1) {
+        badge.className += ' cond-red';
+      }
+    }
+  </script>
+</head>
+<body onload="applyConditionStyle()">
+  <div class="azden-card">
+    <div class="azden-header">
+      <div class="azden-header-title">
+        <h1>Arizona Digital Emcomm Net</h1>
+        <div class="subtitle">Official Station Check-In Record</div>
+      </div>
+      <button class="btn no-print" onclick="window.print()">Print Record</button>
+    </div>
+
+    <div class="azden-body">
+      
+      <div class="form-grid" style="margin-bottom: 20px;">
+        <div class="form-group form-full">
+          <div class="viewer-label">Operational Condition Status</div>
+          <div style="margin-top: 4px;">
+            <span id="conditionPill" class="condition-pill">{var StationCondition}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <div class="viewer-field">
+            <div class="viewer-label">Station Callsign</div>
+            <div class="viewer-value">{var StationCall}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="viewer-field">
+            <div class="viewer-label">Operator Name</div>
+            <div class="viewer-value">{var OperatorName}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <div class="viewer-field">
+            <div class="viewer-label">Position / Coordinates</div>
+            <div class="viewer-value" style="font-size: 14px;">{var GridOrPos}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="viewer-field">
+            <div class="viewer-label">Check-In Date &amp; Time</div>
+            <div class="viewer-value" style="font-size: 14px;">{var CheckInDateTime}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <div class="viewer-field">
+            <div class="viewer-label">Net Control Station</div>
+            <div class="viewer-value" style="font-size: 14px;">{var NetControl}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-full">
+          <div class="viewer-field">
+            <div class="viewer-label">Traffic / Comments / Resource Requests</div>
+            <div class="viewer-value-text">{var Comments}</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; font-size: 12px; color: var(--az-text-muted); text-align: center; border-top: 1px dashed var(--az-border); padding-top: 12px;">
+        Transmitted via Winlink Express | Arizona Digital Emcomm Net (AZDEN)
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# Enforce strict Windows CRLF line endings required by Winlink Express
+*.txt text eol=crlf
+*.html text eol=crlf
+*.css text eol=crlf

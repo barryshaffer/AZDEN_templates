@@ -1,0 +1,16 @@
+To: <Callsign>
+Subject: Re: AZDEN Check-In Acknowledgement - <Callsign>
+Msg:
+============================================================
+           ARIZONA DIGITAL EMCOMM NET (AZDEN)
+               CHECK-IN ACKNOWLEDGEMENT
+============================================================
+Your check-in has been received and logged by AZDEN Net Control.
+
+Net Control: <User> (<Callsign>)
+Acknowledgement Time: <DateTime>
+Status: Logged to Net Roster.
+
+73,
+AZDEN Net Control
+============================================================

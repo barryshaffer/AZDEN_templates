@@ -1,0 +1,300 @@
+/* AZDEN_Style.css - Arizona Digital Emcomm Net Theme */
+:root {
+  --az-primary: #1a365d;       /* Deep Navy */
+  --az-primary-light: #2a4365;
+  --az-accent: #c05621;        /* Desert Copper / Sedona Red */
+  --az-accent-gold: #d69e2e;   /* Arizona Flag Gold */
+  --az-bg: #f7fafc;
+  --az-card-bg: #ffffff;
+  --az-border: #e2e8f0;
+  --az-text: #2d3748;
+  --az-text-muted: #718096;
+  
+  --cond-green-bg: #def7ec;
+  --cond-green-text: #03543f;
+  --cond-green-border: #31c48d;
+
+  --cond-yellow-bg: #fef08a;
+  --cond-yellow-text: #713f12;
+  --cond-yellow-border: #eab308;
+
+  --cond-red-bg: #fde8e8;
+  --cond-red-text: #9b1c1c;
+  --cond-red-border: #f98080;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--az-bg);
+  color: var(--az-text);
+  margin: 0;
+  padding: 24px 16px;
+  line-height: 1.5;
+}
+
+.azden-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--az-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--az-border);
+  overflow: hidden;
+}
+
+.azden-header {
+  background: linear-gradient(135deg, var(--az-primary) 0%, #2c5282 100%);
+  color: #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--az-accent-gold);
+}
+
+.azden-header-title h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.azden-header-title .subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.azden-badge {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.azden-body {
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-full {
+  grid-column: 1 / -1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--az-text);
+  margin-bottom: 6px;
+}
+
+.form-group label .required {
+  color: #e53e3e;
+  margin-left: 2px;
+}
+
+.form-control {
+  font-size: 14px;
+  padding: 9px 12px;
+  border: 1px solid var(--az-border);
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: var(--az-text);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--az-primary);
+  box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+}
+
+.form-control[readonly] {
+  background-color: #edf2f7;
+  cursor: not-allowed;
+}
+
+#CheckInDateTime {
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+#CheckInDateTime:hover {
+  background-color: #f7fafc;
+}
+
+/* Condition status banner preview */
+.condition-banner {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border-left: 5px solid transparent;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cond-green {
+  background-color: var(--cond-green-bg);
+  color: var(--cond-green-text);
+  border-left-color: var(--cond-green-border);
+}
+
+.cond-yellow {
+  background-color: var(--cond-yellow-bg);
+  color: var(--cond-yellow-text);
+  border-left-color: var(--cond-yellow-border);
+}
+
+.cond-red {
+  background-color: var(--cond-red-bg);
+  color: var(--cond-red-text);
+  border-left-color: var(--cond-red-border);
+}
+
+.button-row {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--az-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button-group-left, .button-group-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-utility {
+  background-color: #ffffff;
+  color: var(--az-primary);
+  border-color: #cbd5e0;
+}
+
+.btn-utility:hover {
+  background-color: #edf2f7;
+  border-color: var(--az-primary);
+}
+
+.btn-submit {
+  background-color: var(--az-primary);
+  color: #ffffff;
+  border-color: #152c4d;
+}
+
+.btn-submit:hover {
+  background-color: var(--az-primary-light);
+}
+
+.btn-cancel {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border-color: #cbd5e0;
+}
+
+.btn-cancel:hover {
+  background-color: #e2e8f0;
+}
+
+/* Display Viewer specific styling */
+.viewer-field {
+  background-color: #f8fafc;
+  border: 1px solid var(--az-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  min-height: 22px;
+}
+
+.viewer-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--az-text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.viewer-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--az-primary);
+}
+
+.viewer-value-text {
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--az-text);
+  white-space: pre-wrap;
+}
+
+.condition-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+/* Print styling */
+@media print {
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+  .azden-card {
+    border: 1px solid #000000;
+    box-shadow: none;
+    max-width: 100%;
+  }
+  .azden-header {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000;
+  }
+  .azden-header-title h1, .azden-header-title .subtitle {
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
