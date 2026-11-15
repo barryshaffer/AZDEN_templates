@@ -18,7 +18,7 @@ Cell Service:                   <var CellService>
 POTS:                           <var POTS>
 Internet:                       <var Internet>
 Cable TV:                       <var CableTV>
-Health and Wellness Traffic::   <var MessageCount>
+Health and Wellness Traffic:    <var MessageCount>
 
 Active Bands / Modes:
 <var ActiveBands>
@@ -29,7 +29,7 @@ Power Comments / Notes:
 Water Comments / Notes:
 <var WaterComment>
 
-Water Comments / Notes:
+Cell Service Comments / Notes:
 <var CellComments>
 
 POTS Comments / Notes:
@@ -41,16 +41,16 @@ Internet Comments / Notes:
 Cable TV Comments / Notes:
 <var CableTVComment>
 
-Road Access::
+Road Access:
 <var RoadAccess>
 
-Structural / Property Damage::
+Structural / Property Damage:
 <var StructuralDamageComment>
 
-Medical / Life Safety::
+Medical / Life Safety:
 <var MedicalNeeds>
 
-Resource Request::
+Resource Request:
 <var ResourceRequest>
 
 ------------------------------------------------------------

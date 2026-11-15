@@ -301,11 +301,6 @@ body {
   border: 1px solid transparent;
 }
 
-
-.wl-cell-cell_80_0cwkg {
-  width: 201;
-}
-
 @media print {
   body {
     background: #ffffff;
@@ -511,10 +506,10 @@ body {
             <div class="form-group">
               <label>Power Source</label>
               <div id="PowerSource" class="wl-radio-group">
-                <label for="PowerSource_0" class="wl-radio-option"><input type="radio" id="PowerSource_0" name="PowerSource" value="no" checked /> Commercial Grid</label>
-                <label for="PowerSource_1" class="wl-radio-option"><input type="radio" id="PowerSource_1" name="PowerSource" value="no" /> Generator</label>
-                <label for="PowerSource_2" class="wl-radio-option"><input type="radio" id="PowerSource_2" name="PowerSource" value="no" /> Solar / Battery</label>
-                <label for="PowerSource_3" class="wl-radio-option"><input type="radio" id="PowerSource_3" name="PowerSource" value="no" /> Vehicle</label>
+                <label for="PowerSource_0" class="wl-radio-option"><input type="radio" id="PowerSource_0" name="PowerSource" value="Commercial Grid" checked /> Commercial Grid</label>
+                <label for="PowerSource_1" class="wl-radio-option"><input type="radio" id="PowerSource_1" name="PowerSource" value="Generator" /> Generator</label>
+                <label for="PowerSource_2" class="wl-radio-option"><input type="radio" id="PowerSource_2" name="PowerSource" value="Solar - Battery" /> Solar / Battery</label>
+                <label for="PowerSource_3" class="wl-radio-option"><input type="radio" id="PowerSource_3" name="PowerSource" value="Vehicle" /> Vehicle</label>
               </div>
             </div>
           </div>
@@ -527,8 +522,8 @@ body {
           <div class="wl-grid-cell">
             <div class="form-group">
               <label for="ActiveBands">Active Bands / Modes</label>
-              <textarea id="ActiveBands" name="ActiveBands" class="form-textarea" rows="4" placeholder="e.g., &quot;2m Simplex 146.52, Winlink VARA FM, GMRS Ch 15&quot;)"></textarea>
-              <span class="hint-text">what you are monitoring</span>
+              <textarea id="ActiveBands" name="ActiveBands" class="form-textarea" rows="4" placeholder="e.g., &quot;2m Simplex 146.52, Winlink VARA FM, GMRS Ch 15&quot;"></textarea>
+              <span class="hint-text">What frequencies / modes you are monitoring</span>
             </div>
           </div>
           <div class="wl-grid-cell" style="grid-column: span 3">
@@ -555,7 +550,7 @@ body {
                   <label>Water</label>
                   <div id="Water" class="wl-radio-group">
                     <label for="Water_0" class="wl-radio-option"><input type="radio" id="Water_0" name="Water" value="Y" checked /> Y</label>
-                    <label for="Water_1" class="wl-radio-option"><input type="radio" id="Water_1" name="Water" value="down" /> N</label>
+                    <label for="Water_1" class="wl-radio-option"><input type="radio" id="Water_1" name="Water" value="N" /> N</label>
                     <label for="Water_2" class="wl-radio-option"><input type="radio" id="Water_2" name="Water" value="Boil Notice" /> Boil Notice</label>
                   </div>
                 </div>
@@ -577,7 +572,7 @@ body {
               </div>
               <div class="wl-grid-cell" style="grid-column: span 2">
                 <div class="form-group">
-                  <label for="CellComments">Water Comments / Notes</label>
+                  <label for="CellComments">Cell Service Comments / Notes</label>
                   <textarea id="CellComments" name="CellComments" class="form-textarea" rows="2"></textarea>
                 </div>
               </div>
@@ -628,9 +623,6 @@ body {
                 </div>
               </div>
             </div>
-          </div>
-          <div class="wl-grid-cell" style="grid-column: span 3">
-
           </div>
         </div>
 
