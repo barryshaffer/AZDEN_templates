@@ -1,0 +1,58 @@
+Form: AZDEN-SITREP_Entry.html,AZDEN-SITREP_Display.html
+To: <var NetControl>
+Subject: AZDEN SitRep: <var StationCall>
+Msg:
+AZDEN NET SIT REP
+------------------------------------------------------------
+Incident Name:                  <var incident>
+Date & Time:                    <var CheckInDateTime>
+Position / Grid Square:         <var GridOrPos>
+Station Callsign:               <var StationCall>
+Operator Name:                  <var OperatorName>
+Net Control Callsign / Target:  <var NetControl>
+Power Source:                   <var PowerSource>
+Runtime:                        <var Runtime>
+Grid Power:                     <var GridPower>
+Water:                          <var Water>
+Cell Service:                   <var CellService>
+POTS:                           <var POTS>
+Internet:                       <var Internet>
+Cable TV:                       <var CableTV>
+Health and Wellness Traffic::   <var MessageCount>
+
+Active Bands / Modes:
+<var ActiveBands>
+
+Power Comments / Notes:
+<var PowerComment>
+
+Water Comments / Notes:
+<var WaterComment>
+
+Water Comments / Notes:
+<var CellComments>
+
+POTS Comments / Notes:
+<var POTSComment>
+
+Internet Comments / Notes:
+<var InternetComment>
+
+Cable TV Comments / Notes:
+<var CableTVComment>
+
+Road Access::
+<var RoadAccess>
+
+Structural / Property Damage::
+<var StructuralDamageComment>
+
+Medical / Life Safety::
+<var MedicalNeeds>
+
+Resource Request::
+<var ResourceRequest>
+
+------------------------------------------------------------
+Express Sending Station:	<MsgSender>
+Template Version:		1.0

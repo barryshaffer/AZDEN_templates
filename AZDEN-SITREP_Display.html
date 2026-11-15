@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AZDEN Situation Report</title>
+  <style>
+/* Shared Winlink Express Form & Display Stylesheet */
+:root {
+  --wl-primary: #1a365d;
+  --wl-primary-light: #2a4365;
+  --wl-accent: #d69e2e;
+  --wl-bg: #f7fafc;
+  --wl-card-bg: #ffffff;
+  --wl-border: #e2e8f0;
+  --wl-text: #2d3748;
+  --wl-text-muted: #718096;
+
+  --cond-green-bg: #def7ec;
+  --cond-green-text: #03543f;
+  --cond-green-border: #31c48d;
+  --cond-yellow-bg: #fef08a;
+  --cond-yellow-text: #713f12;
+  --cond-yellow-border: #eab308;
+  --cond-red-bg: #fde8e8;
+  --cond-red-text: #9b1c1c;
+  --cond-red-border: #f98080;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--wl-bg);
+  color: var(--wl-text);
+  margin: 0;
+  padding: 24px 16px;
+  line-height: 1.5;
+}
+
+.wl-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--wl-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--wl-border);
+  overflow: hidden;
+}
+
+.wl-header {
+  background: linear-gradient(135deg, var(--wl-primary) 0%, #2c5282 100%);
+  color: #ffffff;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--wl-accent);
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+.wl-header-title h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.wl-header-title .subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.wl-badge {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.wl-body {
+  padding: 20px 24px;
+}
+
+.wl-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+  border-style: none;
+}
+
+.wl-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.wl-cell {
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wl-primary);
+  margin-bottom: 6px;
+}
+
+.form-group label .req {
+  color: #c53030;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: var(--wl-text);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--wl-primary);
+  box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+}
+
+.wl-datetime-input {
+  cursor: pointer;
+}
+
+.wl-datetime-input:hover {
+  border-color: var(--wl-primary);
+  background-color: #f8fafc;
+}
+
+.wl-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wl-radio-option,
+.wl-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500 !important;
+  color: var(--wl-text) !important;
+  cursor: pointer;
+}
+
+.hint-text {
+  font-size: 11px;
+  color: var(--wl-text-muted);
+  margin-top: 4px;
+}
+
+.wl-divider {
+  border: none;
+  border-top: 1px solid var(--wl-border);
+  margin: 16px 0;
+}
+
+.condition-banner {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  border-left: 4px solid transparent;
+}
+
+.cond-green {
+  background-color: var(--cond-green-bg);
+  color: var(--cond-green-text);
+  border-color: var(--cond-green-border);
+}
+
+.cond-yellow {
+  background-color: var(--cond-yellow-bg);
+  color: var(--cond-yellow-text);
+  border-color: var(--cond-yellow-border);
+}
+
+.cond-red {
+  background-color: var(--cond-red-bg);
+  color: var(--cond-red-text);
+  border-color: var(--cond-red-border);
+}
+
+.form-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--wl-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-group-left,
+.action-group-right {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+.btn-utility {
+  background-color: #ffffff;
+  color: var(--wl-primary);
+  border-color: #cbd5e0;
+}
+
+.btn-utility:hover {
+  background-color: #edf2f7;
+  border-color: var(--wl-primary);
+}
+
+.btn-submit {
+  background-color: var(--wl-primary);
+  color: #ffffff;
+  border-color: #152c4d;
+}
+
+.btn-submit:hover {
+  background-color: var(--wl-primary-light);
+}
+
+.btn-cancel {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border-color: #cbd5e0;
+}
+
+.viewer-field {
+  background-color: #f8fafc;
+  border: 1px solid var(--wl-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  min-height: 22px;
+  margin-bottom: 8px;
+}
+
+.viewer-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--wl-text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.viewer-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wl-primary);
+}
+
+.viewer-value-text {
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--wl-text);
+  white-space: pre-wrap;
+}
+
+.condition-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+
+.wl-cell-cell_80_0cwkg {
+  width: 201;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+  .wl-card {
+    border: 1px solid #000000;
+    box-shadow: none;
+    max-width: 100%;
+  }
+  .wl-header {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000;
+  }
+  .wl-header-title h1,
+  .wl-header-title .subtitle {
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="wl-card">
+    <div class="wl-body">
+      <div class="wl-header">
+        <div class="wl-header-title">
+          <h1>Arizona Digital Emcomm Net</h1>
+          <div class="subtitle">AZDEN Situation Report - Official Record</div>
+        </div>
+        <button type="button" class="btn no-print" onclick="window.print()">Print Record</button>
+      </div>
+
+      <h3>1. Incident and Routing</h3>
+
+      <div class="wl-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px">
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Incident Name</div>
+            <div class="viewer-value">{var incident}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Date &amp; Time</div>
+            <div class="viewer-value">{var CheckInDateTime}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Position / Grid Square</div>
+            <div class="viewer-value">{var GridOrPos}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Station Callsign</div>
+            <div class="viewer-value">{var StationCall}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Operator Name</div>
+            <div class="viewer-value">{var OperatorName}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Net Control Callsign / Target</div>
+            <div class="viewer-value">{var NetControl}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell" style="grid-column: span 3">
+          <hr class="wl-divider" />
+          <h3>2. Station Communication Capabilities</h3>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Power Source</div>
+            <div class="viewer-value">{var PowerSource}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Runtime</div>
+            <div class="viewer-value">{var Runtime}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell">
+          <div class="viewer-field">
+            <div class="viewer-label">Active Bands / Modes</div>
+            <div class="viewer-value-text">{var ActiveBands}</div>
+          </div>
+        </div>
+        <div class="wl-grid-cell" style="grid-column: span 3">
+          <h3>3. Critical Infrastructure &amp; Utilities</h3>
+          <div class="wl-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px">
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">Grid Power</div>
+                <div class="viewer-value">{var GridPower}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">Power Comments / Notes</div>
+                <div class="viewer-value-text">{var PowerComment}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">Water</div>
+                <div class="viewer-value">{var Water}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">Water Comments / Notes</div>
+                <div class="viewer-value-text">{var WaterComment}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">Cell Service</div>
+                <div class="viewer-value">{var CellService}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">Water Comments / Notes</div>
+                <div class="viewer-value-text">{var CellComments}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">POTS</div>
+                <div class="viewer-value">{var POTS}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">POTS Comments / Notes</div>
+                <div class="viewer-value-text">{var POTSComment}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">Internet</div>
+                <div class="viewer-value">{var Internet}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">Internet Comments / Notes</div>
+                <div class="viewer-value-text">{var InternetComment}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell">
+              <div class="viewer-field">
+                <div class="viewer-label">Cable TV</div>
+                <div class="viewer-value">{var CableTV}</div>
+              </div>
+            </div>
+            <div class="wl-grid-cell" style="grid-column: span 2">
+              <div class="viewer-field">
+                <div class="viewer-label">Cable TV Comments / Notes</div>
+                <div class="viewer-value-text">{var CableTVComment}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>4. Neighborhood &amp; Safety Conditions</h3>
+
+      <div class="viewer-field">
+        <div class="viewer-label">Road Access:</div>
+        <div class="viewer-value-text">{var RoadAccess}</div>
+      </div>
+
+      <div class="viewer-field">
+        <div class="viewer-label">Structural / Property Damage:</div>
+        <div class="viewer-value-text">{var StructuralDamageComment}</div>
+      </div>
+
+      <h3>5. Immediate Needs &amp; Welfare</h3>
+
+      <div class="viewer-field">
+        <div class="viewer-label">Medical / Life Safety:</div>
+        <div class="viewer-value-text">{var MedicalNeeds}</div>
+      </div>
+
+      <div class="viewer-field">
+        <div class="viewer-label">Resource Request:</div>
+        <div class="viewer-value-text">{var ResourceRequest}</div>
+      </div>
+
+      <div class="viewer-field">
+        <div class="viewer-label">Health and Wellness Traffic:</div>
+        <div class="viewer-value">{var MessageCount}</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

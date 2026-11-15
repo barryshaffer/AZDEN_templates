@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AZDEN Net Sit Rep</title>
+  <style>
+/* Shared Winlink Express Form & Display Stylesheet */
+:root {
+  --wl-primary: #1a365d;
+  --wl-primary-light: #2a4365;
+  --wl-accent: #d69e2e;
+  --wl-bg: #f7fafc;
+  --wl-card-bg: #ffffff;
+  --wl-border: #e2e8f0;
+  --wl-text: #2d3748;
+  --wl-text-muted: #718096;
+
+  --cond-green-bg: #def7ec;
+  --cond-green-text: #03543f;
+  --cond-green-border: #31c48d;
+  --cond-yellow-bg: #fef08a;
+  --cond-yellow-text: #713f12;
+  --cond-yellow-border: #eab308;
+  --cond-red-bg: #fde8e8;
+  --cond-red-text: #9b1c1c;
+  --cond-red-border: #f98080;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--wl-bg);
+  color: var(--wl-text);
+  margin: 0;
+  padding: 24px 16px;
+  line-height: 1.5;
+}
+
+.wl-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--wl-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--wl-border);
+  overflow: hidden;
+}
+
+.wl-header {
+  background: linear-gradient(135deg, var(--wl-primary) 0%, #2c5282 100%);
+  color: #ffffff;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--wl-accent);
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+.wl-header-title h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.wl-header-title .subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.wl-badge {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.wl-body {
+  padding: 20px 24px;
+}
+
+.wl-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+  border-style: none;
+}
+
+.wl-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.wl-cell {
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wl-primary);
+  margin-bottom: 6px;
+}
+
+.form-group label .req {
+  color: #c53030;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: var(--wl-text);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--wl-primary);
+  box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15);
+}
+
+.wl-datetime-input {
+  cursor: pointer;
+}
+
+.wl-datetime-input:hover {
+  border-color: var(--wl-primary);
+  background-color: #f8fafc;
+}
+
+.wl-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wl-radio-option,
+.wl-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500 !important;
+  color: var(--wl-text) !important;
+  cursor: pointer;
+}
+
+.hint-text {
+  font-size: 11px;
+  color: var(--wl-text-muted);
+  margin-top: 4px;
+}
+
+.wl-divider {
+  border: none;
+  border-top: 1px solid var(--wl-border);
+  margin: 16px 0;
+}
+
+.condition-banner {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  border-left: 4px solid transparent;
+}
+
+.cond-green {
+  background-color: var(--cond-green-bg);
+  color: var(--cond-green-text);
+  border-color: var(--cond-green-border);
+}
+
+.cond-yellow {
+  background-color: var(--cond-yellow-bg);
+  color: var(--cond-yellow-text);
+  border-color: var(--cond-yellow-border);
+}
+
+.cond-red {
+  background-color: var(--cond-red-bg);
+  color: var(--cond-red-text);
+  border-color: var(--cond-red-border);
+}
+
+.form-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--wl-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-group-left,
+.action-group-right {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+.btn-utility {
+  background-color: #ffffff;
+  color: var(--wl-primary);
+  border-color: #cbd5e0;
+}
+
+.btn-utility:hover {
+  background-color: #edf2f7;
+  border-color: var(--wl-primary);
+}
+
+.btn-submit {
+  background-color: var(--wl-primary);
+  color: #ffffff;
+  border-color: #152c4d;
+}
+
+.btn-submit:hover {
+  background-color: var(--wl-primary-light);
+}
+
+.btn-cancel {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border-color: #cbd5e0;
+}
+
+.viewer-field {
+  background-color: #f8fafc;
+  border: 1px solid var(--wl-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  min-height: 22px;
+  margin-bottom: 8px;
+}
+
+.viewer-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--wl-text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.viewer-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wl-primary);
+}
+
+.viewer-value-text {
+  font-size: 14px;
+  font-weight: normal;
+  color: var(--wl-text);
+  white-space: pre-wrap;
+}
+
+.condition-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+
+.wl-cell-cell_80_0cwkg {
+  width: 201;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+  .wl-card {
+    border: 1px solid #000000;
+    box-shadow: none;
+    max-width: 100%;
+  }
+  .wl-header {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000;
+  }
+  .wl-header-title h1,
+  .wl-header-title .subtitle {
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+  </style>
+  <script>
+    function TimeNow(Timefld, FocusFld) {
+      var d = new Date(),
+          year = d.getFullYear(),
+          month = d.getMonth() + 1,
+          day = d.getDate(),
+          h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
+          m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+      if (month < 10) month = '0' + month;
+      if (day < 10) day = '0' + day;
+      var myprompt = year + '-' + month + '-' + day + ' ' + h + ':' + m;
+      var RightNow = prompt('Enter or confirm Date & Time:', myprompt);
+      if (RightNow !== null && RightNow.trim() !== '') {
+        document.getElementById(Timefld).value = RightNow.trim();
+      }
+    }
+
+    function CheckIfInBrowser() {
+      var el = document.getElementById("testCall");
+      if (!el) return;
+      var x = el.value;
+      var subBtn = document.getElementById("Submit");
+      if (x.indexOf("{Msg") > -1) {
+        if (subBtn) subBtn.style.visibility = "hidden";
+        alert("You are running this form outside of Winlink Express.\n\nWhen finished, click 'Save Form Data' and supply the saved file to the radio operator.");
+      } else {
+        if (subBtn) subBtn.style.visibility = "visible";
+      }
+    }
+
+    function formDataToObject(form) {
+      var data = {};
+      var elements = form.elements;
+      for (var i = 0; i < elements.length; i++) {
+        var el = elements[i];
+        if (!el.name || el.type === 'submit' || el.type === 'button' || el.type === 'file') continue;
+        if (el.type === 'checkbox') {
+          data[el.name] = el.checked ? (el.value || 'Yes') : '';
+        } else if (el.type === 'radio') {
+          if (el.checked) data[el.name] = el.value;
+        } else {
+          data[el.name] = el.value;
+        }
+      }
+      return data;
+    }
+
+    function saveFormData() {
+      var form = document.getElementById('AZDENSituationReport');
+      var data = formDataToObject(form);
+      var jsonString = JSON.stringify(data, null, 2);
+      var now = new Date();
+      var pad = function(n) { return n < 10 ? '0' + n : n; };
+      var defName = 'AZDEN Net Sit Rep ' + now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + '_' + pad(now.getMinutes()) + '.txt';
+      var fileName = prompt('Enter filename to save form data:', defName);
+      if (!fileName) return;
+      if (fileName.indexOf('.txt') === -1) fileName += '.txt';
+      var blob = new Blob([jsonString], { type: 'text/plain' });
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, fileName);
+      } else {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    }
+
+    function triggerLoadData() {
+      var input = document.getElementById('txtfiletoread');
+      if (input) input.click();
+    }
+
+    function populateForm(data) {
+      var form = document.getElementById('AZDENSituationReport');
+      if (!form) return;
+      for (var key in data) {
+        if (!Object.prototype.hasOwnProperty.call(data, key)) continue;
+        var el = form.elements[key];
+        if (!el) continue;
+        if (el.length && !el.tagName) {
+          for (var j = 0; j < el.length; j++) {
+            el[j].checked = (el[j].value === data[key]);
+          }
+        } else if (el.type === 'checkbox') {
+          el.checked = Boolean(data[key]);
+        } else {
+          el.value = data[key];
+        }
+      }
+      var condEl = document.querySelector('select[onchange*="updateConditionPreview"]');
+      if (condEl && typeof updateConditionPreview === 'function') {
+        updateConditionPreview(condEl.value);
+      }
+    }
+
+    window.onload = function() {
+      CheckIfInBrowser();
+      var fileInput = document.getElementById('txtfiletoread');
+      if (fileInput) {
+        fileInput.addEventListener('change', function() {
+          var file = fileInput.files && fileInput.files[0];
+          if (!file) return;
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            try {
+              var parsed = JSON.parse(e.target.result);
+              populateForm(parsed);
+            } catch (err) {
+              alert('Unable to parse saved form data file.');
+            }
+          };
+          reader.readAsText(file);
+        });
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="wl-card">
+    <form id="AZDENSituationReport" method="post" action="http://{FormServer}:{FormPort}" enctype="multipart/form-data" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to Winlink Express.');">
+      <div class="wl-body">
+        <div class="wl-header">
+          <div class="wl-header-title">
+            <h1>Arizona Digital Emcomm Net</h1>
+            <div class="subtitle">AZDEN Situation Report</div>
+          </div>
+          <div class="wl-badge">AZDEN SIT REP</div>
+        </div>
+
+        <h3>1. Incident and Routing</h3>
+
+        <div class="wl-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px">
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="incident">Incident Name <span class="req">*</span></label>
+              <input type="text" id="incident" name="incident" class="form-input" required />
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="CheckInDateTime">Date &amp; Time <span class="req">*</span></label>
+              <input type="text" id="CheckInDateTime" name="CheckInDateTime" class="form-input wl-datetime-input" value="{DateTime}" onclick="TimeNow('CheckInDateTime', 'CheckInDateTime')" title="Click to update with current date/time" required />
+              <span class="hint-text">Click field to update current Date &amp; Time.</span>
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="GridOrPos">Position / Grid Square <span class="req">*</span></label>
+              <input type="text" id="GridOrPos" name="GridOrPos" class="form-input" value="{Position}" placeholder="Lat/Lon or Grid (e.g. DM33)" required />
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="StationCall">Station Callsign <span class="req">*</span></label>
+              <input type="text" id="StationCall" name="StationCall" class="form-input" value="{Callsign}" required />
+              <span class="hint-text">Auto-populated from Winlink Express.</span>
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="OperatorName">Operator Name <span class="req">*</span></label>
+              <input type="text" id="OperatorName" name="OperatorName" class="form-input" value="{User}" placeholder="First and Last Name" required />
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="NetControl">Net Control Callsign / Target <span class="req">*</span></label>
+              <input type="text" id="NetControl" name="NetControl" class="form-input" value="AZDEN-NET" required />
+            </div>
+          </div>
+          <div class="wl-grid-cell" style="grid-column: span 3">
+            <hr class="wl-divider" />
+            <h3>2. Station Communication Capabilities</h3>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label>Power Source</label>
+              <div id="PowerSource" class="wl-radio-group">
+                <label for="PowerSource_0" class="wl-radio-option"><input type="radio" id="PowerSource_0" name="PowerSource" value="no" checked /> Commercial Grid</label>
+                <label for="PowerSource_1" class="wl-radio-option"><input type="radio" id="PowerSource_1" name="PowerSource" value="no" /> Generator</label>
+                <label for="PowerSource_2" class="wl-radio-option"><input type="radio" id="PowerSource_2" name="PowerSource" value="no" /> Solar / Battery</label>
+                <label for="PowerSource_3" class="wl-radio-option"><input type="radio" id="PowerSource_3" name="PowerSource" value="no" /> Vehicle</label>
+              </div>
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="Runtime">Runtime</label>
+              <input type="number" id="Runtime" name="Runtime" class="form-input" placeholder="Runtime in hours" />
+            </div>
+          </div>
+          <div class="wl-grid-cell">
+            <div class="form-group">
+              <label for="ActiveBands">Active Bands / Modes</label>
+              <textarea id="ActiveBands" name="ActiveBands" class="form-textarea" rows="4" placeholder="e.g., &quot;2m Simplex 146.52, Winlink VARA FM, GMRS Ch 15&quot;)"></textarea>
+              <span class="hint-text">what you are monitoring</span>
+            </div>
+          </div>
+          <div class="wl-grid-cell" style="grid-column: span 3">
+            <h3>3. Critical Infrastructure &amp; Utilities</h3>
+            <div class="wl-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px">
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>Grid Power</label>
+                  <div id="GridPower" class="wl-radio-group">
+                    <label for="GridPower_0" class="wl-radio-option"><input type="radio" id="GridPower_0" name="GridPower" value="Y" checked /> Y</label>
+                    <label for="GridPower_1" class="wl-radio-option"><input type="radio" id="GridPower_1" name="GridPower" value="N" /> N</label>
+                    <label for="GridPower_2" class="wl-radio-option"><input type="radio" id="GridPower_2" name="GridPower" value="Intermittent" /> Intermittent</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="PowerComment">Power Comments / Notes</label>
+                  <textarea id="PowerComment" name="PowerComment" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>Water</label>
+                  <div id="Water" class="wl-radio-group">
+                    <label for="Water_0" class="wl-radio-option"><input type="radio" id="Water_0" name="Water" value="Y" checked /> Y</label>
+                    <label for="Water_1" class="wl-radio-option"><input type="radio" id="Water_1" name="Water" value="down" /> N</label>
+                    <label for="Water_2" class="wl-radio-option"><input type="radio" id="Water_2" name="Water" value="Boil Notice" /> Boil Notice</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="WaterComment">Water Comments / Notes</label>
+                  <textarea id="WaterComment" name="WaterComment" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>Cell Service</label>
+                  <div id="CellService" class="wl-radio-group">
+                    <label for="CellService_0" class="wl-radio-option"><input type="radio" id="CellService_0" name="CellService" value="Y" checked /> Y</label>
+                    <label for="CellService_1" class="wl-radio-option"><input type="radio" id="CellService_1" name="CellService" value="N" /> N</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="CellComments">Water Comments / Notes</label>
+                  <textarea id="CellComments" name="CellComments" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>POTS</label>
+                  <div id="POTS" class="wl-radio-group">
+                    <label for="POTS_0" class="wl-radio-option"><input type="radio" id="POTS_0" name="POTS" value="NA" checked /> N/A</label>
+                    <label for="POTS_1" class="wl-radio-option"><input type="radio" id="POTS_1" name="POTS" value="Y" /> Y</label>
+                    <label for="POTS_2" class="wl-radio-option"><input type="radio" id="POTS_2" name="POTS" value="N" /> N</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="POTSComment">POTS Comments / Notes</label>
+                  <textarea id="POTSComment" name="POTSComment" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>Internet</label>
+                  <div id="Internet" class="wl-radio-group">
+                    <label for="Internet_0" class="wl-radio-option"><input type="radio" id="Internet_0" name="Internet" value="Y" checked /> Y</label>
+                    <label for="Internet_1" class="wl-radio-option"><input type="radio" id="Internet_1" name="Internet" value="N" /> N</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="InternetComment">Internet Comments / Notes</label>
+                  <textarea id="InternetComment" name="InternetComment" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="wl-grid-cell">
+                <div class="form-group">
+                  <label>Cable TV</label>
+                  <div id="CableTV" class="wl-radio-group">
+                    <label for="CableTV_0" class="wl-radio-option"><input type="radio" id="CableTV_0" name="CableTV" value="Y" checked /> Y</label>
+                    <label for="CableTV_1" class="wl-radio-option"><input type="radio" id="CableTV_1" name="CableTV" value="N" /> N</label>
+                  </div>
+                </div>
+              </div>
+              <div class="wl-grid-cell" style="grid-column: span 2">
+                <div class="form-group">
+                  <label for="CableTVComment">Cable TV Comments / Notes</label>
+                  <textarea id="CableTVComment" name="CableTVComment" class="form-textarea" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wl-grid-cell" style="grid-column: span 3">
+
+          </div>
+        </div>
+
+        <h3>4. Neighborhood &amp; Safety Conditions</h3>
+
+        <div class="form-group">
+          <label for="RoadAccess">Road Access:</label>
+          <textarea id="RoadAccess" name="RoadAccess" class="form-textarea" rows="4" placeholder="Clear, Blocked (downed trees/power lines), or Flooded. Note specific blocked intersections."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="StructuralDamageComment">Structural / Property Damage:</label>
+          <textarea id="StructuralDamageComment" name="StructuralDamageComment" class="form-textarea" rows="4" placeholder="None, Minor (fences/roof tiles), or Major (structural collapse/fires)."></textarea>
+        </div>
+
+        <h3>5. Immediate Needs &amp; Welfare</h3>
+
+        <div class="form-group">
+          <label for="MedicalNeeds">Medical / Life Safety:</label>
+          <textarea id="MedicalNeeds" name="MedicalNeeds" class="form-textarea" rows="4" placeholder="Any urgent injuries, stranded residents, or depleted medical supplies (e.g., oxygen, insulin) that need first responder dispatch."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="ResourceRequest">Resource Request:</label>
+          <textarea id="ResourceRequest" name="ResourceRequest" class="form-textarea" rows="4" placeholder="Needs that the community or club can solve locally (e.g., &quot;Need 5 gallons of gas for generator,&quot; &quot;Need chainsaw crew at Oak &amp; Main&quot;)."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="MessageCount">Health and Wellness Traffic:</label>
+          <input type="number" id="MessageCount" name="MessageCount" class="form-input" placeholder="Number of &quot;I am safe&quot; messages ready to be relayed out of the blackout area once a digital gateway is reached." />
+        </div>
+
+        <div class="form-actions">
+          <div class="action-group-left">
+            <button type="button" class="btn btn-utility" onclick="saveFormData()">Save Form Data</button>
+            <button type="button" class="btn btn-utility" onclick="triggerLoadData()">Load Form Data</button>
+          </div>
+          <div class="action-group-right">
+            <input type="button" value="Cancel" class="btn btn-cancel" onclick="window.close();" title="Close without submitting" />
+            <input type="submit" id="Submit" name="Submit" value="Submit" class="btn btn-submit" method="Post" enctype="multipart/form-data" title="Submit to Winlink Express" />
+          </div>
+        </div>
+
+        <input type="hidden" id="TemplateVersion" name="TemplateVersion" value="1.0" />
+        <input name="testCall" type="hidden" id="testCall" value="{MsgSender}" />
+        <textarea id="parseme" style="display:none;"></textarea>
+        <input type="file" id="txtfiletoread" accept=".txt" style="display:none;" />
+      </div>
+    </form>
+  </div>
+</body>
+</html>
